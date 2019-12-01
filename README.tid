@@ -8,14 +8,30 @@ tiddlers.
 
 For more about pouchdb: https://pouchdb.com/
 
+I don't know if this can be packaged the way that BobEXE is packaged because it
+has to compile some C code as part of the pouchdb install.
+I haven't tested yet.
+
 !! Usage
 
 This is still experimental, so the setup isn't as simple as I would like.
 These are instructions that work, there are probably better ways to do the same
 thing.
 
+You need nodejs and npm installed.
+
 # Make a folder called PouchDBTest and navigate into it
-# Clone the tiddlywiki repo inside the folder
+#* `mkdir PouchDBTest`
+#* `cd PouchDBTest`
 # in the PouchDBTest folder make a new npm project
+#* `npm init`
+#* you can use all of the default settings, just hit enter until it stops asking questions.
 # Install pouchdb using npm
-# Start tiddlywiki with `node ./TiddlyWiki5/tiddlywiki.js`
+#* `npm install pouchdb`
+# Clone the tiddlywiki repo
+#* `git clone --depth=1 --branch v5.1.21 https://github.com/Jermolene/TiddlyWiki5.git`
+# Clone the plugin repo
+# `git clone https://github.com/OokTech/TW5-PouchDBAdaptor.git TiddlyWiki5/plugins/OokTech/PouchDBAdaptor`
+# Start tiddlywiki with `node ./TiddlyWiki5/tiddlywiki.js TiddlyWiki5/plugins/OokTech/PoucdDBAdaptor/PouchDBTest --listen`
+# Open a browser and go to `localhost:8080/pouch/wiki/`
+#* It has to be something other than / because that serves the wiki using the normal method instead of loading tiddlers from the database, and it can't be just /wiki because one of the core server routes interferes with that.

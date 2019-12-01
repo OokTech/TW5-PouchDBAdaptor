@@ -3,7 +3,7 @@ title: $:/plugins/OokTech/PouchDBAdaptor/get-pouch-wiki.js
 type: application/javascript
 module-type: route
 
-GET /^\/wiki$
+GET /^\/pouch\/wiki
 
 Returns the wiki
 
@@ -16,7 +16,7 @@ Returns the wiki
 
 const wikisDB = require('$:/plugins/OokTech/Bob/UsePouchDB.js').wikis
 const tiddlerDB = require('$:/plugins/OokTech/Bob/UsePouchDB.js')
-const thePath = new RegExp('^\/wiki\/?')
+const thePath = /^\/pouch\/wiki(\/?)$/
 
 module.exports = {
   method: "GET",
