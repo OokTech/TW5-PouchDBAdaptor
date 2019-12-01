@@ -14,18 +14,14 @@ functions.
 
 let PouchDB = undefined
 let tiddlersDB = undefined
-let wikisDB = undefined
 if ($tw.node) {
   try {
     PouchDB = require('pouchdb')
     tiddlersDB = new PouchDB('tiddlers')
-    wikisDB = new PouchDB('wikis')
   } catch (e) {
 
   }
 }
 module.exports = tiddlersDB
-
-module.exports.wikis = wikisDB
 
 })();
