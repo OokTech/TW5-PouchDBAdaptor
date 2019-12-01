@@ -1,0 +1,7 @@
+{
+	"title": "$:/plugins/OokTech/PouchDBAdaptor",
+	"description": "A sync adaptor that uses pouchdb as the back-end",
+	"author": "inmysocks",
+	"core-version": ">=5.1.21",
+	"list": "readme"
+}

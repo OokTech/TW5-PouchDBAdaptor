@@ -1,0 +1,21 @@
+!! PouchDB Adaptor
+
+This is an experimental syncadaptor for tiddlywiki that saves tiddlers to a
+local pouchdb.
+
+PouchDB is a lightweight local database that is well suited to storing
+tiddlers.
+
+For more about pouchdb: https://pouchdb.com/
+
+!! Usage
+
+This is still experimental, so the setup isn't as simple as I would like.
+These are instructions that work, there are probably better ways to do the same
+thing.
+
+# Make a folder called PouchDBTest and navigate into it
+# Clone the tiddlywiki repo inside the folder
+# in the PouchDBTest folder make a new npm project
+# Install pouchdb using npm
+# Start tiddlywiki with `node ./TiddlyWiki5/tiddlywiki.js`

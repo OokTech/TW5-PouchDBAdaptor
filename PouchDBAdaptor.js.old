@@ -1,0 +1,124 @@
+/*\
+title: $:/plugins/OokTech/Bob/PouchSyncer.js
+type: application/javascript
+module-type: syncadaptor
+
+A node sync adaptor for PouchDB
+
+\*/
+(function(){
+
+/*jslint node: true, browser: true */
+/*global $tw: false */
+"use strict";
+
+function PouchSyncer(options) {
+  this.wiki = options.wiki;
+}
+
+let PouchDB = undefined
+if ($tw.node && false) {
+  let tiddlersDB = undefined
+  try {
+    PouchDB = require('pouchdb')
+    tiddlersDB = new PouchDB('tiddlers')
+  } catch (e) {
+
+  }
+
+  // REQUIRED
+  // The name of the syncer
+  PouchSyncer.prototype.name = "pouchsyncer"
+
+  // REQUIRED
+  // Tiddler info, can be left like this but must be present
+  PouchSyncer.prototype.getTiddlerInfo = function() {
+    return {}
+  }
+
+  // REQUIRED
+  // This does whatever is necessary to actually store a tiddler
+  PouchSyncer.prototype.saveTiddler = function (tiddler, callback) {
+    tiddlerDB.get(tiddler.fields.title, function(err,doc) {
+      if (err) {
+        if (err.name === 'not_found') {
+          // Put new tiddler
+        } else {
+          // Some other error
+          console.log("Error saving tiddler ", tiddler.fields.title, " error:", err)
+        }
+      }
+      // Update existing tiddler
+      const newDoc = {fields: tiddler.fields, _id: doc._id, _rev: doc._rev}
+      tiddlerDB.put(newDoc, function(err, response) {
+        callback(err)
+      })
+    })
+  }
+
+  // REQUIRED
+  // This does whatever is necessary to load a tiddler
+  PouchSyncer.prototype.loadTiddler = function (title, callback) {
+    // We don't return the whole doc, just the fields part, so we need to make
+    // a function here instead of just putting in callback as the second
+    // argument.
+    tiddlerDB.get(title, function (err, doc) {
+      callback(err, doc.fields)
+    })
+  }
+
+  // REQUIRED
+  // This does whatever is necessary to delete a tiddler
+  PouchSyncer.prototype.deleteTiddler = function (title, callback, options) {
+    tiddlerDB.get(title, function(err, doc) {
+      if (err) {
+        callback(err)
+        return
+      }
+      doc._deleted = true
+      tiddlerDB.put(doc, callback)
+    })
+  }
+
+  // OPTIONAL
+  // Returns true if the syncer is ready, otherwise false
+  // This can be updated at any time, it gets checked when a syncing task is
+  // being run so its value can change over time.
+  PouchSyncer.prototype.isReady = function() {
+    return true
+  }
+
+  // OPTIONAL
+  // This checks the login state
+  // it can be used to give an async way to check the status and update the
+  // isReady state. The tiddlyweb adaptor does this.
+  PouchSyncer.prototype.getStatus = function(callback) {
+
+  }
+
+  // OPTIONAL
+  // A login thing, need specifics
+  PouchSyncer.prototype.login = function (username, password, callback) {
+
+  }
+
+  // OPTIONAL
+  // A logout thing, need specifics
+  PouchSyncer.prototype.logout = function (callback) {
+
+  }
+
+  // OPTIONAL
+  // Loads skinny tiddlers, need specifics
+  PouchSyncer.prototype.getSkinnyTiddlers = function (callback) {
+
+  }
+
+}
+
+// Replace this with whatever conditions are required to use your adaptor
+if (PouchDB) {
+  exports.adaptorClass = PouchSyncer
+}
+
+})();
